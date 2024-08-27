@@ -26,18 +26,12 @@ COPY dags/test.py ${AIRFLOW_HOME}/dags/
 # Set working directory
 WORKDIR ${AIRFLOW_HOME}
 
-# Initialize Airflow database and create user
-RUN airflow db init && \
-    airflow users create \
-    --username admin \
-    --password admin \
-    --firstname Admin \
-    --lastname User \
-    --role Admin \
-    --email admin@example.com
+# Copy the entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Expose port for Airflow webserver
 EXPOSE 8080
 
-# Start Airflow webserver and scheduler
-CMD ["sh", "-c", "airflow webserver & airflow scheduler"]
+# Use the entrypoint script to start Airflow
+ENTRYPOINT ["/entrypoint.sh"]
