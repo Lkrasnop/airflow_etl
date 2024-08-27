@@ -1,0 +1,34 @@
+[2024-08-27T01:01:52.547+0000] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mysql_to_postgresql_etl.extract scheduled__2024-08-26T00:56:48.542229+00:00 [queued]>
+[2024-08-27T01:01:52.558+0000] {taskinstance.py:1103} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mysql_to_postgresql_etl.extract scheduled__2024-08-26T00:56:48.542229+00:00 [queued]>
+[2024-08-27T01:01:52.558+0000] {taskinstance.py:1308} INFO - Starting attempt 2 of 2
+[2024-08-27T01:01:52.576+0000] {taskinstance.py:1327} INFO - Executing <Task(PythonOperator): extract> on 2024-08-26 00:56:48.542229+00:00
+[2024-08-27T01:01:52.585+0000] {standard_task_runner.py:57} INFO - Started process 1137 to run task
+[2024-08-27T01:01:52.589+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'mysql_to_postgresql_etl', 'extract', 'scheduled__2024-08-26T00:56:48.542229+00:00', '--job-id', '13', '--raw', '--subdir', 'DAGS_FOLDER/test.py', '--cfg-path', '/tmp/tmpm4h20zj3']
+[2024-08-27T01:01:52.592+0000] {standard_task_runner.py:85} INFO - Job 13: Subtask extract
+[2024-08-27T01:01:52.651+0000] {task_command.py:410} INFO - Running <TaskInstance: mysql_to_postgresql_etl.extract scheduled__2024-08-26T00:56:48.542229+00:00 [running]> on host f00156c30bb5
+[2024-08-27T01:01:52.749+0000] {taskinstance.py:1547} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='mysql_to_postgresql_etl' AIRFLOW_CTX_TASK_ID='extract' AIRFLOW_CTX_EXECUTION_DATE='2024-08-26T00:56:48.542229+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-08-26T00:56:48.542229+00:00'
+[2024-08-27T01:01:52.797+0000] {base.py:73} INFO - Using connection ID 'mysql_default' for task execution.
+[2024-08-27T01:01:52.813+0000] {logging_mixin.py:150} INFO - Error in extract task: (2003, "Can't connect to MySQL server on '127.0.0.1:3306' (111)")
+[2024-08-27T01:01:52.830+0000] {base.py:73} INFO - Using connection ID 'mysql_default' for task execution.
+[2024-08-27T01:01:52.836+0000] {logging_mixin.py:150} INFO - MySQL Connection Info: mysql://root:za12zaZA12%21%40@127.0.0.1:3306/zchema?__extra__=%7B%7D
+[2024-08-27T01:01:52.838+0000] {taskinstance.py:1824} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/operators/python.py", line 181, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/operators/python.py", line 198, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/test.py", line 317, in extract
+    df = mysql_hook.get_pandas_df(sql=query)
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/common/sql/hooks/sql.py", line 200, in get_pandas_df
+    with closing(self.get_conn()) as conn:
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/mysql/hooks/mysql.py", line 188, in get_conn
+    return MySQLdb.connect(**conn_config)
+  File "/home/airflow/.local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 123, in Connect
+    return Connection(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/MySQLdb/connections.py", line 185, in __init__
+    super().__init__(*args, **kwargs2)
+MySQLdb.OperationalError: (2003, "Can't connect to MySQL server on '127.0.0.1:3306' (111)")
+[2024-08-27T01:01:52.877+0000] {taskinstance.py:1350} INFO - Marking task as FAILED. dag_id=mysql_to_postgresql_etl, task_id=extract, execution_date=20240826T005648, start_date=20240827T010152, end_date=20240827T010152
+[2024-08-27T01:01:52.897+0000] {standard_task_runner.py:109} ERROR - Failed to execute job 13 for task extract ((2003, "Can't connect to MySQL server on '127.0.0.1:3306' (111)"); 1137)
+[2024-08-27T01:01:52.945+0000] {local_task_job_runner.py:225} INFO - Task exited with return code 1
+[2024-08-27T01:01:52.975+0000] {taskinstance.py:2653} INFO - 0 downstream tasks scheduled from follow-on schedule check

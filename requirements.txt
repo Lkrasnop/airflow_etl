@@ -1,0 +1,7 @@
+# mysql-connector-python
+# psycopg2-binary
+# pandas
+apache-airflow==2.6.3
+mysqlclient==2.1.1
+psycopg2-binary==2.9.6
+pandas==1.5.3
