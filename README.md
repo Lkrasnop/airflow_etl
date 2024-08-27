@@ -1,5 +1,5 @@
 # Airflow ETL Project
-
+[![Airflow ETL CI/CD](https://github.com/Lkrasnop/airflow_etl/actions/workflows/main.yml/badge.svg)](https://github.com/Lkrasnop/airflow_etl/actions/workflows/main.yml)
 ## Overview
 This project implements an ETL (Extract, Transform, Load) pipeline using Apache Airflow. It extracts data from a MySQL database, performs transformations, and loads the results into a PostgreSQL database.
 
