@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -47,8 +47,38 @@ jobs:
       env:
         PYTHONPATH: ${{ github.workspace }}
 
+  build-and-run:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Compose
+      run: |
+        sudo rm /usr/local/bin/docker-compose
+        curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o docker-compose
+        chmod +x docker-compose
+        sudo mv docker-compose /usr/local/bin
+
+    - name: Build and run Docker Compose
+      run: |
+        echo "AIRFLOW_UID=$(id -u)" > .env
+        docker-compose up -d
+        sleep 60  # Give some time for services to start
+
+    - name: Check running containers
+      run: docker-compose ps
+
+    - name: Check Airflow webserver
+      run: |
+        curl --fail http://localhost:8080/health || (docker-compose logs && exit 1)
+
+    - name: Stop Docker Compose
+      run: docker-compose down
+
   deploy:
-    needs: build
+    needs: build-and-run
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
@@ -59,4 +89,4 @@ jobs:
         # For example:
         # - SSH into your server
         # - Pull the latest code
-        # - Restart your application
+        # - Run docker-compose up -d        
