@@ -39,9 +39,9 @@ jobs:
       run: |
         echo "Running tests from:"
         pwd
-        echo "Test directory contents:"
-        ls -l tests/
-        python -m unittest discover -v tests
+        echo "Test file contents:"
+        ls -l test_for_etl.py
+        python -m unittest test_for_etl.py
       env:
         PYTHONPATH: ${{ github.workspace }}
 
