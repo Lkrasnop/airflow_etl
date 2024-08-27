@@ -22,18 +22,20 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install numpy==1.24.3  # Specify a version compatible with Python 3.11
+        pip install pandas==2.0.3  # Specify a version compatible with the numpy version
         pip install -r requirements.txt
 
-    - name: Debug directory structure
+    - name: Debug environment
       run: |
-        echo "Current working directory:"
-        pwd
-        echo "Directory structure:"
-        ls -R
-        echo "Python path:"
-        echo $PYTHONPATH
         echo "Python version:"
         python --version
+        echo "Pip list:"
+        pip list
+        echo "NumPy version:"
+        python -c "import numpy; print(numpy.__version__)"
+        echo "Pandas version:"
+        python -c "import pandas; print(pandas.__version__)"
 
     - name: Run tests
       run: |
