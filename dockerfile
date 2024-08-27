@@ -3,6 +3,8 @@ FROM python:3.11-slim
 
 # Set environment variables
 ENV AIRFLOW_HOME=/opt/airflow
+ENV AIRFLOW__CORE__LOAD_EXAMPLES=False
+ENV AIRFLOW__CORE__EXECUTOR=LocalExecutor
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
