@@ -54,12 +54,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up Docker Compose
-      run: |
-        sudo rm /usr/local/bin/docker-compose
-        curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o docker-compose
-        chmod +x docker-compose
-        sudo mv docker-compose /usr/local/bin
+    - name: Check Docker Compose version
+      run: docker-compose --version
 
     - name: Build and run Docker Compose
       run: |
@@ -89,4 +85,4 @@ jobs:
         # For example:
         # - SSH into your server
         # - Pull the latest code
-        # - Run docker-compose up -d        
+        # - Run docker-compose up -d
