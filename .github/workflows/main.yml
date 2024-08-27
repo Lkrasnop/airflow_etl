@@ -24,8 +24,26 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Debug directory structure
+      run: |
+        echo "Current working directory:"
+        pwd
+        echo "Directory structure:"
+        ls -R
+        echo "Python path:"
+        echo $PYTHONPATH
+        echo "Python version:"
+        python --version
+
     - name: Run tests
-      run: python -m unittest discover tests
+      run: |
+        echo "Running tests from:"
+        pwd
+        echo "Test directory contents:"
+        ls -l tests/
+        python -m unittest discover -v tests
+      env:
+        PYTHONPATH: ${{ github.workspace }}
 
     - name: Build Docker image
       run: docker build -t airflow-etl:${{ github.sha }} .
